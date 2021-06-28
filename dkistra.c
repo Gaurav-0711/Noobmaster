@@ -33,7 +33,7 @@ void dijs(int n,int sv, int cost[10][10],int dist[])
 	}
 }
 
-main()
+int main()
 {
 	int n,sv,i,j,dist[10],cost[10][10];
 	printf("\nDijkstra\n");
@@ -58,4 +58,5 @@ main()
 		if (j!=sv)
 			printf("%d->%d == %d\n",sv,j,dist[j]);
 	}
+	return 0;
 }
