@@ -5,7 +5,8 @@
 void prims(int n,int cost[10][10],int source){
 	int v[10]; // keeps track to nodes visited and not
        	int d[10]; // keeps latest shortest distance from source
-        int i, j; //index variables
+        int i, j; //index variable
+	
         int vertex[10]; //keeps track of nearest node to spanning tree
         int u, least, sum=0;
 
