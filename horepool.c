@@ -45,5 +45,5 @@ void main()
 	if (res==-1)
 		printf("Not found");
 	else
-		printf("Pattern found at position %d",res+1);
-}
+		printf("Pattern found at position %d\n",res+1);
+} 
