@@ -1,58 +1,46 @@
 #include<stdio.h>
-#include<stdlib.h>
-int w[10],x[10],d;
-
-void sum_subset(int s,int k , int r)
-{
-    int i;
-    static int b = 1;
-    x[k]=1;
-    if(s+w[k]==d)
-    {
-        printf("\nSubset %d : ",b++);
-        for ( i = 1; i < k; i++)
-        {
-            if(x[i]==1)
-            printf("%d\t",w[i]);
-
+int n,d,sum=0,rwt=0,a[10],s[10],flag=0;
+int j;
+void sumOfSubset(int i){
+    if(sum+s[i] <= d){
+        sum+=s[i];
+        rwt-=s[i];
+        a[i]=1;
+        if(sum == d){
+            flag=1;
+            printf("\nSubset with elements positioned:");
+            for(j=0;j<n;j++)
+                if(a[j]==1)
+                    printf("\t%d",j+1);
         }
+        if(i+1<n)
+            sumOfSubset(i+1);
+        sum-=s[i];
+        rwt+=s[i];
+        a[i]=0;
     }
-     else 
-        {
-            if(s+w[k]+w[k+1]<=d)
-            sum_subset(s+w[k],k+1,r-w[k]);
-
-            if ((s+r-w[k] >=d) && (s+w[k+1] <=d))
-                {
-                 x[k]=0;
-                 sum_subset(s,k+1,r-w[k]);
-                }       
-        }
-
-
-        
- }
-
-
-int main()
-{
-    int n, i,sum =0;
-    printf("\nEnter number of elements");
+    if(rwt - s[i] >= d-sum){
+        rwt-=s[i];
+        if(i+1<n)
+            sumOfSubset(i+1);
+        rwt += s[i];
+    }
+}
+void main(){
+    printf("\nEnter the size of set:");
     scanf("%d",&n);
-    printf("\nRead the elements in increasing order");
-    for ( i = 1; i <= n; i++)
-    {
-       scanf("%d",&w[i]);
-       sum = sum+w[i]; 
+    
+    printf("\nEnter the elements of set:");
+    for(j=0;j<n;j++){
+        scanf("%d",&s[j]);
+        rwt+=s[j];
     }
-    printf("\nEnter subset max value");
+    printf("\nEnter the sum value:");
     scanf("%d",&d);
-    if(sum<d||w[1]>d)
-    {
-        printf("\nNO solution");
-        exit(0);
-    }
-    sum_subset(0,1,d);
-    return 0;
-    printf("\n");
+    
+    sumOfSubset(0);
+    
+    if(flag==0)
+        printf("\nNone of the subset matches required condition.\n");
+    
 }
