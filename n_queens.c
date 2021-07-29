@@ -1,65 +1,61 @@
-#include <stdio.h>
 
-int board[20][20]={0};
-
-void print(int board[20][20],int n)
-{
-    int i,j;
-    for(i=0;i<n;i++)
-    {
-        for(j=0;j<n;j++)
-            printf("%d\t",board[i][j]);
-        printf("\n");
-    }
-}
-
-int check(int board[20][20],int row,int col,int n)
-{
-    int i,j;
-    for (i = 0; i < col; i++)
-    if (board[row][i])
-        return 0;
-    for (i = row, j = col; i >= 0 && j >= 0; i--, j--)
-        if (board[i][j])
-            return 0;
-    for (i = row, j = col; j >= 0 && i < n; i++, j--)
-        if (board[i][j])
-            return 0;
-    return 1;
-}
-
-int solve(int board[20][20],int n,int col)
-{
-    int i,j;
-    if (col >= n)
-        return 1;
-    for (int i = 0; i < n; i++) 
-    {
-        if (check(board, i, col,n)) 
-        {
-        board[i][col] = 1;
-        if (solve(board,n, col + 1))
-        return 1;
-        board[i][col] = 0;
-        }
-    }
-    return 0;
-}
-
-int main()
-{
-    int n,i,j;
-    printf("Enter number of queens to place:\n");
-    scanf("%d",&n);
-    
-    int ans=solve(board,n,0);
-    if(!ans)
-    {
-        printf("Could not place all queens\n");
-    }
-    else
-    {
-        printf("The board placement is:\n");
-        print(board,n);
-    }
+#include<stdio.h> 
+#include<math.h> 
+#include<stdlib.h> 
+int board[10],count; 
+void print(int n) 
+{ 
+ int i,j; 
+ printf("\n\n Solution %d\n\n",++count); 
+ for(i=1;i<=n;i++) 
+ printf("\t%d",i); 
+ for(i=1;i<=n;i++) 
+ { 
+ printf("\n\n%d",i); 
+ for(j=1;j<=n;j++) 
+ { 
+ if(board[i]==j) 
+ printf("\tQ"); 
+ else 
+ printf("\t-"); 
+ } 
+ } 
+} 
+int place(int row,int col) 
+{ 
+int i; 
+for(i=1;i<=row-1;i++) 
+ { 
+ if(board[i]==col) 
+ return 0; 
+ else if(abs(board[i]-col) == abs(i-row)) 
+ return 0; 
+ } 
+ return 1; 
+} 
+void nqueens(int row, int n) 
+{ 
+ int col; 
+ for(col=1;col<=n;col++) 
+ { 
+ if(place(row,col)) 
+ { 
+ board[row]=col;
+ if(row == n) 
+ print(n); 
+ else 
+ nqueens(row+1,n); 
+ } 
+ } 
+} 
+int main() 
+{ 
+ int n; 
+ printf("\n Enter the number of Queens :"); 
+ scanf("%d",&n); 
+ if ( n==1 || n==2 || n==3) 
+ printf("\n no soultions"); 
+ else 
+ nqueens(1,n); 
+ return 0; 
 }
